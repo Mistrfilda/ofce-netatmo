@@ -1,0 +1,12 @@
+netatmoApi:
+	baseUrl: 'https://api.netatmo.com/'
+
+credentials:
+	clientId: ''
+	clientSecret: ''
+	username: ''
+	password: ''
+
+devices:
+	healthyHomeCoach:
+		macAddress: ''

@@ -4,8 +4,11 @@ declare(strict_types = 1);
 
 namespace Ofce\Netatmo\Client\Request;
 
-use App\Exception\RequestException;
+use Ofce\Netatmo\Exception\RequestException;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
+use Ofce\Netatmo\Client\Response\Response;
+use Psr\Http\Message\ResponseInterface;
+
 
 abstract class Request
 {
@@ -16,29 +19,47 @@ abstract class Request
 	/** @var GuzzleRequest */
 	private $httpRequest;
 
+	/** @var string[] */
+	private $body;
+
 	/**
 	 * Request constructor.
 	 * @param string $method
 	 * @param string $endpoint
-	 * @param array $body
+	 * @param string[] $body
 	 * @throws RequestException
 	 */
 	public function __construct(string $method, string $endpoint, array $body)
 	{
-		if (!in_array($method, [self::METHOD_GET, self::METHOD_POST])) {
+		if (!in_array($method, [self::METHOD_GET, self::METHOD_POST], true)) {
 			throw new RequestException('Unsupported METHOD');
 		}
 
 		$this->httpRequest = new GuzzleRequest(
 			$method,
-			$endpoint,
-			[],
-			$body
+			$endpoint
 		);
+
+		$this->body = $body;
+	}
+
+	/**
+	 * @return string[]
+	 */
+	public function getBody(): array
+	{
+		return $this->body;
 	}
 
 	public function getHttpRequest(): GuzzleRequest
 	{
 		return $this->httpRequest;
 	}
+
+	public function hasBody(): bool
+	{
+		return count($this->body) > 0;
+	}
+
+	public abstract function processResponse(ResponseInterface $response): Response;
 }

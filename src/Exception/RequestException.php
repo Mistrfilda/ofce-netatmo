@@ -3,7 +3,7 @@
 declare(strict_types = 1);
 
 
-namespace App\Exception;
+namespace Ofce\Netatmo\Exception;
 
 
 final class RequestException extends \Exception
