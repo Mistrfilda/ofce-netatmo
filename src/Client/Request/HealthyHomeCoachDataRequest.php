@@ -7,6 +7,7 @@ namespace Ofce\Netatmo\Client\Request;
 
 
 use Nette\Utils\Json;
+use Ofce\Netatmo\Client\Response\HealthyHomeCoachResponse;
 use Ofce\Netatmo\Client\Response\Response;
 use Ofce\Netatmo\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
@@ -33,7 +34,7 @@ final class HealthyHomeCoachDataRequest extends Request
 		}
 
 		$contents = Json::decode($response->getBody()->getContents(), Json::FORCE_ARRAY);
-		dump($contents);
-		die();
+
+		return new HealthyHomeCoachResponse($contents);
 	}
 }
