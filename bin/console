@@ -5,6 +5,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Ofce\Netatmo\Command\HealthyHomeCoach\GetHealthyHomeCoachDataCommand;
+use Ofce\Netatmo\Command\HealthyHomeCoach\SaveHealthyHomeCoachDataCommand;
 use Ofce\Netatmo\Configuration\Configuration;
 use Symfony\Component\Console\Application;
 
@@ -13,5 +14,6 @@ $app = new Application();
 $configuration = new Configuration();
 
 $app->add(new GetHealthyHomeCoachDataCommand($configuration));
+$app->add(new SaveHealthyHomeCoachDataCommand($configuration));
 
 $app->run();
