@@ -27,6 +27,7 @@
 		"stan": "vendor/bin/phpstan analyse -l 7 -c phpstan.neon src --ansi",
 		"lint": "vendor/bin/parallel-lint --colors src/",
 		"cs": "vendor/bin/ecs check src --ansi",
-		"cs-fix": "vendor/bin/ecs check src --fix --ansi"
+		"cs-fix": "vendor/bin/ecs check src --fix --ansi",
+		"build-all": "composer lint && composer stan && composer cs"
 	}
 }

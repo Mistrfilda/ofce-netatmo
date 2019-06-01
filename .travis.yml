@@ -1,0 +1,16 @@
+language: php
+
+php:
+  - 7.2
+
+matrix:
+  fast_finish: true
+
+install:
+  - composer self-update
+  - composer install --no-interaction --prefer-source -o
+
+script:
+  - composer lint
+  - composer stan
+  - composer cs

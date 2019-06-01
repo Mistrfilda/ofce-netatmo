@@ -9,4 +9,5 @@ credentials:
 
 devices:
 	healthyHomeCoach:
-		macAddress: ''
+		room1:
+			macAddress: ''
