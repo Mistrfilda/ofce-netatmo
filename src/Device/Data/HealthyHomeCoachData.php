@@ -6,6 +6,9 @@ declare(strict_types = 1);
 namespace Ofce\Netatmo\Device\Data;
 
 
+use Ofce\Netatmo\Lib\DatetimeFactory;
+
+
 class HealthyHomeCoachData
 {
 	/** @var \DateTimeImmutable */
@@ -167,5 +170,24 @@ class HealthyHomeCoachData
 	public function getDateMaxTemp(): \DateTimeImmutable
 	{
 		return $this->dateMaxTemp;
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	public function getConsoleOutput(): array
+	{
+		return [
+			['Time', $this->time->format(DatetimeFactory::DATETIME_FORMAT)],
+			['Temperature', sprintf('%s °C',$this->temperature)],
+			['CO2', $this->CO2],
+			['Humidity', $this->humidity],
+			['Noise', $this->noise],
+			['Pressure', $this->pressure],
+			['Absolute pressure', $this->absolutePressure],
+			['Health Idx', $this->healthIdx],
+			['Min temp', sprintf('%s °C at %s', $this->minTemp, $this->dateMinTemp->format(DatetimeFactory::DATETIME_FORMAT))],
+			['Max temp', sprintf('%s °C at %s', $this->maxTemp, $this->dateMaxTemp->format(DatetimeFactory::DATETIME_FORMAT))]
+		];
 	}
 }

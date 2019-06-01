@@ -36,6 +36,8 @@ abstract class Device
 		return $this->macAddress;
 	}
 
+	public abstract function getDeviceType(): string;
+
 	/** @return string[] */
 	public abstract static function getOauthScopes(): array;
 }

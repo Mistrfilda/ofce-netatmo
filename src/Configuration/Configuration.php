@@ -14,30 +14,41 @@ use Ofce\Netatmo\Client\Client;
 use Ofce\Netatmo\Client\Request\AuthorizationRequest;
 use Ofce\Netatmo\Device\Device;
 use Ofce\Netatmo\Device\HealthyHomeCoach;
+use Ofce\Netatmo\Exception\UnknownDeviceException;
 
 
 final class Configuration
 {
+	public const CONFIG_LOCATION = __DIR__ . '/config.local.neon';
+
 	/** @var Client */
 	private $client;
 
 	/** @var Device[] */
 	private $devices = [];
 
-	public function __construct()
+	public function __construct(?string $configFile = null)
 	{
-		$neonConfig = @file_get_contents(__DIR__ . '/config.local.neon');
+		if ($configFile === null) {
+			$configFile = self::CONFIG_LOCATION;
+		}
+
+		$neonConfig = @file_get_contents($configFile);
 		if ($neonConfig === false) {
 			throw new ConfigurationException('Missing config file src/Configuration/config.local.neon');
 		}
 
 		$parameters = Neon::decode($neonConfig);
 
-		dump($parameters);
 		$this->validateConfig($parameters);
 
 		//Process healthy home coach, just for now, maybe more devices in the future :)
 		foreach ($parameters['devices']['healthyHomeCoach'] as $name => $healthyHomeCoach) {
+			//Useless for now, again for future use :)
+			if (array_key_exists($name, $this->devices)) {
+				throw new ConfigurationException('Duplicate device name, devices must be unique across all types');
+			}
+
 			$this->devices[$name] = new HealthyHomeCoach($name, $healthyHomeCoach['macAddress']);
 		}
 
@@ -48,14 +59,44 @@ final class Configuration
 			$parameters['credentials']['clientSecret'],
 			$parameters['credentials']['username'],
 			$parameters['credentials']['password'],
-			implode(',', $scopes)
+			implode(' ', $scopes)
 		);
 
 		$this->client = new Client($parameters['netatmoApi']['baseUrl'], $authorizationRequest);
+	}
 
-		dump($this->client);
+	public function getClient(): Client
+	{
+		return $this->client;
+	}
 
-		die();
+	/**
+	 * @return Device[]
+	 */
+	public function getDevices(): array
+	{
+		return $this->devices;
+	}
+
+	/**
+	 * @param string $name
+	 * @param string|null $deviceType
+	 * @return Device
+	 * @throws UnknownDeviceException
+	 */
+	public function getDeviceByName(string $name, ?string $deviceType = null): Device
+	{
+		if (array_key_exists($name, $this->devices)) {
+			if ($deviceType !== null && $this->devices[$name]->getDeviceType() !== $deviceType) {
+				throw new UnknownDeviceException(
+					sprintf('Specified device %s is listed under different device type', $name)
+				);
+			}
+
+			return $this->devices[$name];
+		}
+
+		throw new UnknownDeviceException(sprintf('Missing device %s in configuration', $name));
 	}
 
 	private function validateConfig(array $parameters): void

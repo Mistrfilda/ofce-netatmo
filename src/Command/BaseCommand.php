@@ -13,7 +13,7 @@ use Symfony\Component\Console\Command\Command;
 abstract class BaseCommand extends Command
 {
 	/** @var Configuration */
-	private $configuration;
+	protected $configuration;
 
 	public function __construct(Configuration $configuration)
 	{
