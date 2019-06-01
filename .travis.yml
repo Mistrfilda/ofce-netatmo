@@ -8,7 +8,7 @@ matrix:
 
 install:
   - composer self-update
-  - composer install --no-interaction --prefer-source -o
+  - composer install --no-interaction -o
 
 script:
   - composer lint
