@@ -1,0 +1,87 @@
+imports:
+  - { resource: 'vendor/symplify/easy-coding-standard/config/set/clean-code.yaml' }
+  - { resource: 'vendor/symplify/easy-coding-standard/config/set/php71.yaml' }
+  - { resource: 'vendor/symplify/easy-coding-standard/config/set/common.yaml' }
+  - { resource: 'vendor/symplify/easy-coding-standard/config/set/php_cs_fixer/php-cs-fixer-psr2.yaml' }
+
+
+services:
+  PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\MemberVarSpacingSniff:
+    spacing: 1
+    spacingBeforeFirst: 0
+  SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEqualOperatorsSniff:
+  SlevomatCodingStandard\Sniffs\Namespaces\UseFromSameNamespaceSniff:
+  SlevomatCodingStandard\Sniffs\Exceptions\DeadCatchSniff:
+  SlevomatCodingStandard\Sniffs\Classes\SuperfluousAbstractClassNamingSniff:
+  SlevomatCodingStandard\Sniffs\Classes\SuperfluousInterfaceNamingSniff:
+  SlevomatCodingStandard\Sniffs\Namespaces\RequireOneNamespaceInFileSniff:
+
+  #PSR12
+  PhpCsFixer\Fixer\CastNotation\LowercaseCastFixer: ~
+  PhpCsFixer\Fixer\CastNotation\ShortScalarCastFixer: ~
+  PhpCsFixer\Fixer\PhpTag\BlankLineAfterOpeningTagFixer: ~
+  PhpCsFixer\Fixer\Import\NoLeadingImportSlashFixer: ~
+  PhpCsFixer\Fixer\Import\OrderedImportsFixer:
+    importsOrder:
+      - 'class'
+      - 'const'
+      - 'function'
+  PhpCsFixer\Fixer\LanguageConstruct\DeclareEqualNormalizeFixer:
+    space: 'none'
+  PhpCsFixer\Fixer\Operator\NewWithBracesFixer: ~
+  PhpCsFixer\Fixer\Basic\BracesFixer:
+    allow_single_line_closure: false
+    position_after_functions_and_oop_constructs: 'next'
+    position_after_control_structures: 'same'
+    position_after_anonymous_constructs: 'same'
+
+  PhpCsFixer\Fixer\ClassNotation\NoBlankLinesAfterClassOpeningFixer: ~
+  PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer:
+    elements:
+      - 'const'
+      - 'method'
+      - 'property'
+  PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer: ~
+  PhpCsFixer\Fixer\Operator\TernaryOperatorSpacesFixer: ~
+  PhpCsFixer\Fixer\FunctionNotation\ReturnTypeDeclarationFixer: ~
+  PhpCsFixer\Fixer\Whitespace\NoTrailingWhitespaceFixer: ~
+
+  PhpCsFixer\Fixer\Operator\ConcatSpaceFixer:
+    spacing: 'one'
+
+  PhpCsFixer\Fixer\Semicolon\NoSinglelineWhitespaceBeforeSemicolonsFixer: ~
+  PhpCsFixer\Fixer\ArrayNotation\NoWhitespaceBeforeCommaInArrayFixer:
+  PhpCsFixer\Fixer\ArrayNotation\WhitespaceAfterCommaInArrayFixer:
+
+  SlevomatCodingStandard\Sniffs\Namespaces\NamespaceDeclarationSniff:
+  SlevomatCodingStandard\Sniffs\Namespaces\NamespaceSpacingSniff:
+    linesCountBeforeNamespace: 1
+    linesCountAfterNamespace: 1
+  SlevomatCodingStandard\Sniffs\Namespaces\UseSpacingSniff:
+    linesCountBeforeFirstUse: 1
+    linesCountBetweenUseTypes: 1
+    linesCountAfterLastUse: 1
+  SlevomatCodingStandard\Sniffs\TypeHints\LongTypeHintsSniff:
+  SlevomatCodingStandard\Sniffs\PHP\TypeCastSniff:
+  SlevomatCodingStandard\Sniffs\Files\TypeNameMatchesFileNameSniff:
+    rootNamespaces:
+      src: Ofce
+  SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff:
+    searchAnnotations: true
+  SlevomatCodingStandard\Sniffs\Namespaces\UseDoesNotStartWithBackslashSniff:
+  SlevomatCodingStandard\Sniffs\Commenting\RequireOneLinePropertyDocCommentSniff:
+
+parameters:
+  indentation: 'tab'
+  line_ending: "\n"
+
+  skip:
+    PhpCsFixer\Fixer\Import\SingleImportPerStatementFixer: ~
+    PhpCsFixer\Fixer\ReturnNotation\ReturnAssignmentFixer:
+      - src/Client/Client.php
+
+
+  exclude_checkers:
+    - PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer
+    - Symplify\CodingStandard\Fixer\Commenting\RemoveUselessDocBlockFixer
+    - PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer

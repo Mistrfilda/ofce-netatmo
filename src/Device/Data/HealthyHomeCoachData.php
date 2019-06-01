@@ -1,17 +1,15 @@
 <?php
 
-declare(strict_types = 1);
-
+declare(strict_types=1);
 
 namespace Ofce\Netatmo\Device\Data;
 
-
+use DateTimeImmutable;
 use Ofce\Netatmo\Lib\DatetimeFactory;
-
 
 class HealthyHomeCoachData
 {
-	/** @var \DateTimeImmutable */
+	/** @var DateTimeImmutable */
 	private $time;
 
 	/** @var float */
@@ -38,13 +36,13 @@ class HealthyHomeCoachData
 	/** @var float */
 	private $minTemp;
 
-	/** @var \DateTimeImmutable */
+	/** @var DateTimeImmutable */
 	private $dateMinTemp;
 
 	/** @var float */
 	private $maxTemp;
 
-	/** @var \DateTimeImmutable */
+	/** @var DateTimeImmutable */
 	private $dateMaxTemp;
 
 	public function __construct(
@@ -60,9 +58,8 @@ class HealthyHomeCoachData
 		int $dateMinTemp,
 		float $maxTemp,
 		int $dateMaxTemp
-	)
-	{
-		$this->time = new \DateTimeImmutable('@' . $time);
+	) {
+		$this->time = new DateTimeImmutable('@' . $time);
 		$this->temperature = $temperature;
 		$this->CO2 = $CO2;
 		$this->humidity = $humidity;
@@ -71,15 +68,15 @@ class HealthyHomeCoachData
 		$this->absolutePressure = $absolutePressure;
 		$this->healthIdx = $healthIdx;
 		$this->minTemp = $minTemp;
-		$this->dateMinTemp = new \DateTimeImmutable('@' . $dateMinTemp);
+		$this->dateMinTemp = new DateTimeImmutable('@' . $dateMinTemp);
 		$this->maxTemp = $maxTemp;
-		$this->dateMaxTemp = new \DateTimeImmutable('@' . $dateMaxTemp);
+		$this->dateMaxTemp = new DateTimeImmutable('@' . $dateMaxTemp);
 	}
 
 	/**
-	 * @return \DateTimeImmutable
+	 * @return DateTimeImmutable
 	 */
-	public function getTime(): \DateTimeImmutable
+	public function getTime(): DateTimeImmutable
 	{
 		return $this->time;
 	}
@@ -149,9 +146,9 @@ class HealthyHomeCoachData
 	}
 
 	/**
-	 * @return \DateTimeImmutable
+	 * @return DateTimeImmutable
 	 */
-	public function getDateMinTemp(): \DateTimeImmutable
+	public function getDateMinTemp(): DateTimeImmutable
 	{
 		return $this->dateMinTemp;
 	}
@@ -165,9 +162,9 @@ class HealthyHomeCoachData
 	}
 
 	/**
-	 * @return \DateTimeImmutable
+	 * @return DateTimeImmutable
 	 */
-	public function getDateMaxTemp(): \DateTimeImmutable
+	public function getDateMaxTemp(): DateTimeImmutable
 	{
 		return $this->dateMaxTemp;
 	}
@@ -179,7 +176,7 @@ class HealthyHomeCoachData
 	{
 		return [
 			['Time', $this->time->format(DatetimeFactory::DATETIME_FORMAT)],
-			['Temperature', sprintf('%s °C',$this->temperature)],
+			['Temperature', sprintf('%s °C', $this->temperature)],
 			['CO2', $this->CO2],
 			['Humidity', $this->humidity],
 			['Noise', $this->noise],
@@ -187,7 +184,7 @@ class HealthyHomeCoachData
 			['Absolute pressure', $this->absolutePressure],
 			['Health Idx', $this->healthIdx],
 			['Min temp', sprintf('%s °C at %s', $this->minTemp, $this->dateMinTemp->format(DatetimeFactory::DATETIME_FORMAT))],
-			['Max temp', sprintf('%s °C at %s', $this->maxTemp, $this->dateMaxTemp->format(DatetimeFactory::DATETIME_FORMAT))]
+			['Max temp', sprintf('%s °C at %s', $this->maxTemp, $this->dateMaxTemp->format(DatetimeFactory::DATETIME_FORMAT))],
 		];
 	}
 }

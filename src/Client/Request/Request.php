@@ -1,14 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Ofce\Netatmo\Client\Request;
 
-use Ofce\Netatmo\Exception\RequestException;
 use GuzzleHttp\Psr7\Request as GuzzleRequest;
 use Ofce\Netatmo\Client\Response\Response;
+use Ofce\Netatmo\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
-
 
 abstract class Request
 {
@@ -31,7 +30,7 @@ abstract class Request
 	 */
 	public function __construct(string $method, string $endpoint, array $body)
 	{
-		if (!in_array($method, [self::METHOD_GET, self::METHOD_POST], true)) {
+		if (! in_array($method, [self::METHOD_GET, self::METHOD_POST], true)) {
 			throw new RequestException('Unsupported METHOD');
 		}
 
@@ -61,5 +60,5 @@ abstract class Request
 		return count($this->body) > 0;
 	}
 
-	public abstract function processResponse(ResponseInterface $response): Response;
+	abstract public function processResponse(ResponseInterface $response): Response;
 }

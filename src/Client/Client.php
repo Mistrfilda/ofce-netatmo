@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types = 1);
-
+declare(strict_types=1);
 
 namespace Ofce\Netatmo\Client;
 
@@ -10,7 +9,6 @@ use Ofce\Netatmo\Client\Request\AuthorizationRequest;
 use Ofce\Netatmo\Client\Request\Request;
 use Ofce\Netatmo\Client\Response\AuthorizationResponse;
 use Ofce\Netatmo\Client\Response\Response;
-
 
 final class Client
 {
@@ -35,13 +33,6 @@ final class Client
 		$this->client = new GuzzleClient(['base_uri' => $apiUrl]);
 	}
 
-	private function sendAuthorizationRequest(): AuthorizationResponse
-	{
-		/** @var AuthorizationResponse $response */
-		$response = $this->sendRequest($this->authorizationRequest);
-		return $response;
-	}
-
 	public function getAccessToken(): string
 	{
 		if ($this->accessToken !== null) {
@@ -60,10 +51,25 @@ final class Client
 		$options = [];
 		if ($request->hasBody()) {
 			$options = [
-				'form_params' => $request->getBody()
+				'form_params' => $request->getBody(),
 			];
 		}
 
 		return $request->processResponse($this->client->send($request->getHttpRequest(), $options));
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getApiUrl(): string
+	{
+		return $this->apiUrl;
+	}
+
+	private function sendAuthorizationRequest(): AuthorizationResponse
+	{
+		/** @var AuthorizationResponse $response */
+		$response = $this->sendRequest($this->authorizationRequest);
+		return $response;
 	}
 }

@@ -1,10 +1,8 @@
 <?php
 
-declare(strict_types = 1);
-
+declare(strict_types=1);
 
 namespace Ofce\Netatmo\Device;
-
 
 class HealthyHomeCoach extends Device
 {
@@ -17,6 +15,9 @@ class HealthyHomeCoach extends Device
 		parent::__construct($name, $macAddress);
 	}
 
+	/**
+	 * @return string[]
+	 */
 	public static function getOauthScopes(): array
 	{
 		return [self::OAUTH_SCOPE];

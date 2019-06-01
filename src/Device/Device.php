@@ -1,10 +1,8 @@
 <?php
 
-declare(strict_types = 1);
-
+declare(strict_types=1);
 
 namespace Ofce\Netatmo\Device;
-
 
 abstract class Device
 {
@@ -36,8 +34,8 @@ abstract class Device
 		return $this->macAddress;
 	}
 
-	public abstract function getDeviceType(): string;
+	abstract public function getDeviceType(): string;
 
 	/** @return string[] */
-	public abstract static function getOauthScopes(): array;
+	abstract public static function getOauthScopes(): array;
 }

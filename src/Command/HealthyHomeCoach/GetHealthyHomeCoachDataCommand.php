@@ -1,10 +1,8 @@
 <?php
 
-declare(strict_types = 1);
-
+declare(strict_types=1);
 
 namespace Ofce\Netatmo\Command\HealthyHomeCoach;
-
 
 use Ofce\Netatmo\Client\Request\HealthyHomeCoachDataRequest;
 use Ofce\Netatmo\Client\Response\HealthyHomeCoachResponse;
@@ -16,7 +14,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-
 class GetHealthyHomeCoachDataCommand extends BaseCommand
 {
 	public function configure(): void
@@ -26,7 +23,7 @@ class GetHealthyHomeCoachDataCommand extends BaseCommand
 		$this->addArgument('device', InputArgument::REQUIRED, 'Enter Healthy home coach device name');
 	}
 
-	public function execute(InputInterface $input, OutputInterface $output)
+	public function execute(InputInterface $input, OutputInterface $output): int
 	{
 		/** @var string $deviceName */
 		$deviceName = $input->getArgument('device');
@@ -64,6 +61,6 @@ class GetHealthyHomeCoachDataCommand extends BaseCommand
 			$data->getConsoleOutput()
 		);
 
-		exit(1);
+		return 0;
 	}
 }

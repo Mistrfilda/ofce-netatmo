@@ -14,7 +14,9 @@
 		"nette/tester": "^2.2",
 		"phpstan/phpstan-strict-rules": "^0.11.1",
 		"jakub-onderka/php-parallel-lint": "^1.0",
-		"tracy/tracy": "^2.6"
+		"tracy/tracy": "^2.6",
+		"symplify/easy-coding-standard": "^6.0",
+		"roave/security-advisories": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
@@ -23,6 +25,8 @@
 	},
 	"scripts": {
 		"stan": "vendor/bin/phpstan analyse -l 7 -c phpstan.neon src --ansi",
-		"lint": "vendor/bin/parallel-lint --colors src/"
+		"lint": "vendor/bin/parallel-lint --colors src/",
+		"cs": "vendor/bin/ecs check src --ansi",
+		"cs-fix": "vendor/bin/ecs check src --fix --ansi"
 	}
 }

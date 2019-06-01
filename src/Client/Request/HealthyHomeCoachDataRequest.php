@@ -1,17 +1,14 @@
 <?php
 
-declare(strict_types = 1);
-
+declare(strict_types=1);
 
 namespace Ofce\Netatmo\Client\Request;
-
 
 use Nette\Utils\Json;
 use Ofce\Netatmo\Client\Response\HealthyHomeCoachResponse;
 use Ofce\Netatmo\Client\Response\Response;
 use Ofce\Netatmo\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
-
 
 final class HealthyHomeCoachDataRequest extends Request
 {
@@ -22,7 +19,7 @@ final class HealthyHomeCoachDataRequest extends Request
 			'api/gethomecoachsdata',
 			[
 				'access_token' => $accessToken,
-				'device_id' => $deviceId
+				'device_id' => $deviceId,
 			]
 		);
 	}

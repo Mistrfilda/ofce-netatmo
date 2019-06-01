@@ -1,18 +1,15 @@
 <?php
 
-declare(strict_types = 1);
-
+declare(strict_types=1);
 
 namespace Ofce\Netatmo\Client\Request;
 
-
 use Nette\Utils\Json;
-use Ofce\Netatmo\Client\Response\AuthorizationResponse;
-use Ofce\Netatmo\Exception\RequestException;
 use Ofce\Netatmo\Client\Client;
+use Ofce\Netatmo\Client\Response\AuthorizationResponse;
 use Ofce\Netatmo\Client\Response\Response;
+use Ofce\Netatmo\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
-
 
 final class AuthorizationRequest extends Request
 {
@@ -22,8 +19,7 @@ final class AuthorizationRequest extends Request
 		string $username,
 		string $password,
 		string $scope
-	)
-	{
+	) {
 		parent::__construct(
 			Request::METHOD_POST,
 			'oauth2/token',
@@ -33,7 +29,7 @@ final class AuthorizationRequest extends Request
 				'client_id' => $clientId,
 				'client_secret' => $clientSecret,
 				'username' => $username,
-				'password' => $password
+				'password' => $password,
 			]
 		);
 	}

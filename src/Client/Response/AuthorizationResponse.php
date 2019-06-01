@@ -1,15 +1,11 @@
 <?php
 
-declare(strict_types = 1);
-
+declare(strict_types=1);
 
 namespace Ofce\Netatmo\Client\Response;
 
-
-
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
-
 
 class AuthorizationResponse extends Response
 {
@@ -68,7 +64,9 @@ class AuthorizationResponse extends Response
 		return $this->expireIn;
 	}
 
-
+	/**
+	 * @param mixed[] $response
+	 */
 	protected function createFromArrayResponse(array $response): void
 	{
 		$this->accessToken = $response['access_token'];

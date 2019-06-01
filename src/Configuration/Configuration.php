@@ -1,12 +1,9 @@
 <?php
 
-declare(strict_types = 1);
-
+declare(strict_types=1);
 
 namespace Ofce\Netatmo\Configuration;
 
-
-use Ofce\Netatmo\Exception\ConfigurationException;
 use Nette\Neon\Neon;
 use Nette\Schema\Expect;
 use Nette\Schema\Processor;
@@ -14,8 +11,8 @@ use Ofce\Netatmo\Client\Client;
 use Ofce\Netatmo\Client\Request\AuthorizationRequest;
 use Ofce\Netatmo\Device\Device;
 use Ofce\Netatmo\Device\HealthyHomeCoach;
+use Ofce\Netatmo\Exception\ConfigurationException;
 use Ofce\Netatmo\Exception\UnknownDeviceException;
-
 
 final class Configuration
 {
@@ -99,25 +96,28 @@ final class Configuration
 		throw new UnknownDeviceException(sprintf('Missing device %s in configuration', $name));
 	}
 
+	/**
+	 * @param mixed[] $parameters
+	 */
 	private function validateConfig(array $parameters): void
 	{
 		$processor = new Processor();
 
 		$schema = Expect::structure([
 			'netatmoApi' => Expect::structure([
-					'baseUrl' => Expect::string()->required(),
+				'baseUrl' => Expect::string()->required(),
 			]),
 			'credentials' => Expect::structure([
 				'clientId' => Expect::string()->required()->min(10.0),
 				'clientSecret' => Expect::string()->required()->min(10.0),
 				'username' => Expect::string()->required()->min(1.0),
-				'password' => Expect::string()->required()->min(1.0)
+				'password' => Expect::string()->required()->min(1.0),
 			]),
 			'devices' => Expect::structure([
 				'healthyHomeCoach' => Expect::array()->min(1.0)->items(Expect::structure([
-					'macAddress' => Expect::string()->required()
-				]))
-			])
+					'macAddress' => Expect::string()->required(),
+				])),
+			]),
 		]);
 
 		$processor->process($schema, $parameters);

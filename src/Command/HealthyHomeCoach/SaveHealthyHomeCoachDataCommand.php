@@ -1,10 +1,8 @@
 <?php
 
-declare(strict_types = 1);
-
+declare(strict_types=1);
 
 namespace Ofce\Netatmo\Command\HealthyHomeCoach;
-
 
 use Nette\Utils\Json;
 use Ofce\Netatmo\Client\Request\HealthyHomeCoachDataRequest;
@@ -17,7 +15,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-
 class SaveHealthyHomeCoachDataCommand extends BaseCommand
 {
 	public function configure(): void
@@ -29,7 +26,7 @@ class SaveHealthyHomeCoachDataCommand extends BaseCommand
 		$this->addArgument('onlyTemperature', InputArgument::OPTIONAL, 'Save only temperature to file?', '0');
 	}
 
-	public function execute(InputInterface $input, OutputInterface $output)
+	public function execute(InputInterface $input, OutputInterface $output): int
 	{
 		/** @var string $deviceName */
 		$deviceName = $input->getArgument('device');
@@ -81,6 +78,6 @@ class SaveHealthyHomeCoachDataCommand extends BaseCommand
 
 		$console->section('<info>Data successfully saved</info>');
 
-		exit(1);
+		return 0;
 	}
 }

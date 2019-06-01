@@ -1,14 +1,11 @@
 <?php
 
-declare(strict_types = 1);
-
+declare(strict_types=1);
 
 namespace Ofce\Netatmo\Client\Response;
 
-
 use Nette\Schema\Processor;
 use Nette\Schema\Schema;
-
 
 abstract class Response
 {
@@ -21,12 +18,18 @@ abstract class Response
 		$this->createFromArrayResponse($response);
 	}
 
+	/**
+	 * @param mixed[] $response
+	 */
 	protected function validateResponse(array $response): void
 	{
 		(new Processor())->process($this->getResponseSchema(), $response);
 	}
 
-	protected abstract function createFromArrayResponse(array $response): void;
+	/**
+	 * @param mixed[] $response
+	 */
+	abstract protected function createFromArrayResponse(array $response): void;
 
-	protected abstract function getResponseSchema(): Schema;
+	abstract protected function getResponseSchema(): Schema;
 }

@@ -1,16 +1,15 @@
 <?php
 
-declare(strict_types = 1);
-
+declare(strict_types=1);
 
 namespace Ofce\Netatmo\Client\Response;
 
-
+use DateTimeImmutable;
+use Exception;
 use Nette\Schema\Expect;
 use Nette\Schema\Processor;
 use Nette\Schema\Schema;
 use Ofce\Netatmo\Device\Data\HealthyHomeCoachData;
-
 
 class HealthyHomeCoachResponse extends Response
 {
@@ -20,34 +19,11 @@ class HealthyHomeCoachResponse extends Response
 	/** @var float */
 	private $executionTime;
 
-	/** @var \DateTimeImmutable */
+	/** @var DateTimeImmutable */
 	private $deviceTime;
 
 	/** @var HealthyHomeCoachData */
 	private $healthyHomeCoachData;
-
-	protected function createFromArrayResponse(array $response): void
-	{
-		$dashboardData = $response['body']['devices'][0]['dashboard_data'];
-		$this->validateDashboardData($dashboardData);
-		$this->status = $response['status'];
-		$this->executionTime = $response['time_exec'];
-		$this->deviceTime = new \DateTimeImmutable('@' . $response['time_server']);
-		$this->healthyHomeCoachData = new HealthyHomeCoachData(
-			$dashboardData['time_utc'],
-			$dashboardData['Temperature'],
-			$dashboardData['CO2'],
-			$dashboardData['Humidity'],
-			$dashboardData['Noise'],
-			$dashboardData['Pressure'],
-			$dashboardData['AbsolutePressure'],
-			$dashboardData['health_idx'],
-			$dashboardData['min_temp'],
-			$dashboardData['date_min_temp'],
-			$dashboardData['max_temp'],
-			$dashboardData['date_max_temp']
-		);
-	}
 
 	/**
 	 * @return string
@@ -66,9 +42,9 @@ class HealthyHomeCoachResponse extends Response
 	}
 
 	/**
-	 * @return \DateTimeImmutable
+	 * @return DateTimeImmutable
 	 */
-	public function getDeviceTime(): \DateTimeImmutable
+	public function getDeviceTime(): DateTimeImmutable
 	{
 		return $this->deviceTime;
 	}
@@ -81,16 +57,43 @@ class HealthyHomeCoachResponse extends Response
 		return $this->healthyHomeCoachData;
 	}
 
+	/**
+	 * @param mixed[] $response
+	 * @throws Exception
+	 */
+	protected function createFromArrayResponse(array $response): void
+	{
+		$dashboardData = $response['body']['devices'][0]['dashboard_data'];
+		$this->validateDashboardData($dashboardData);
+		$this->status = $response['status'];
+		$this->executionTime = $response['time_exec'];
+		$this->deviceTime = new DateTimeImmutable('@' . $response['time_server']);
+		$this->healthyHomeCoachData = new HealthyHomeCoachData(
+			$dashboardData['time_utc'],
+			$dashboardData['Temperature'],
+			$dashboardData['CO2'],
+			$dashboardData['Humidity'],
+			$dashboardData['Noise'],
+			$dashboardData['Pressure'],
+			$dashboardData['AbsolutePressure'],
+			$dashboardData['health_idx'],
+			$dashboardData['min_temp'],
+			$dashboardData['date_min_temp'],
+			$dashboardData['max_temp'],
+			$dashboardData['date_max_temp']
+		);
+	}
+
 	protected function getResponseSchema(): Schema
 	{
 		return Expect::structure([
 			'body' => Expect::structure([
 				'devices' => Expect::array()->required()->min(1.0),
-				'user' => Expect::array()->required()
+				'user' => Expect::array()->required(),
 			])->required(),
 			'status' => Expect::string()->required(),
 			'time_exec' => Expect::float()->required(),
-			'time_server' => Expect::int()->required()
+			'time_server' => Expect::int()->required(),
 		]);
 	}
 
@@ -111,7 +114,7 @@ class HealthyHomeCoachResponse extends Response
 			'min_temp' => Expect::anyOf(Expect::int(), Expect::float())->required(),
 			'max_temp' => Expect::anyOf(Expect::int(), Expect::float())->required(),
 			'date_min_temp' => Expect::int()->required(),
-			'date_max_temp' => Expect::int()->required()
+			'date_max_temp' => Expect::int()->required(),
 		]);
 
 		(new Processor())->process($schema, $dashboardData);
