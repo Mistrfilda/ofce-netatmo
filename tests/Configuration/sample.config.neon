@@ -1,0 +1,15 @@
+netatmoApi:
+	baseUrl: 'https://testapi.netatmo.com/'
+
+credentials:
+	clientId: '1231231231'
+	clientSecret: '4564564561'
+	username: 'test@user.com'
+	password: '123123123'
+
+devices:
+	healthyHomeCoach:
+		room1:
+			macAddress:  '88:5e:aa:11:22:33'
+		room2:
+			macAddress:  '11:5e:aa:11:22:33'
