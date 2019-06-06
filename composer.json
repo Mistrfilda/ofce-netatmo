@@ -29,6 +29,6 @@
 		"cs": "vendor/bin/ecs check src --ansi",
 		"cs-fix": "vendor/bin/ecs check src --fix --ansi",
 		"test": "vendor/bin/tester tests/",
-		"build-all": "composer lint && composer stan && composer cs"
+		"build-all": "composer lint && composer stan && composer cs && composer test"
 	}
 }
