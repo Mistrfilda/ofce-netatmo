@@ -8,6 +8,17 @@ use Ofce\Netatmo\Command\HealthyHomeCoach\GetHealthyHomeCoachDataCommand;
 use Ofce\Netatmo\Command\HealthyHomeCoach\SaveHealthyHomeCoachDataCommand;
 use Ofce\Netatmo\Configuration\Configuration;
 use Symfony\Component\Console\Application;
+use Tracy\Debugger;
+
+
+$mode = Debugger::DEVELOPMENT;
+
+$productionEnv = getenv('NETATMO_PRODUCTION');
+if ($productionEnv !== false && (bool) $productionEnv === true) {
+	$mode = Debugger::PRODUCTION;
+}
+
+Debugger::enable($mode, __DIR__ . '/../log');
 
 $app = new Application();
 

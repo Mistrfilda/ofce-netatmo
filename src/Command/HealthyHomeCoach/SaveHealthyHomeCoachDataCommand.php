@@ -14,6 +14,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Tracy\Debugger;
+use Tracy\ILogger;
 
 class SaveHealthyHomeCoachDataCommand extends BaseCommand
 {
@@ -77,6 +79,8 @@ class SaveHealthyHomeCoachDataCommand extends BaseCommand
 		}
 
 		$console->section('<info>Data successfully saved</info>');
+
+		Debugger::log('Save healthy home coach data finished successfully', ILogger::INFO);
 
 		return 0;
 	}
