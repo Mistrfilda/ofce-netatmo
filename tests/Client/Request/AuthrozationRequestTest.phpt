@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Nette\Utils\Strings;
 use Ofce\Netatmo\Client\Request\AuthorizationRequest;
 use Ofce\Netatmo\Client\Request\Request;

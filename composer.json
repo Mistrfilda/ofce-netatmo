@@ -24,10 +24,10 @@
 		]
 	},
 	"scripts": {
-		"stan": "vendor/bin/phpstan analyse -l 7 -c phpstan.neon src --ansi",
-		"lint": "vendor/bin/parallel-lint --colors src/",
-		"cs": "vendor/bin/ecs check src --ansi",
-		"cs-fix": "vendor/bin/ecs check src --fix --ansi",
+		"stan": "vendor/bin/phpstan analyse -l 7 -c phpstan.neon src tests --ansi",
+		"lint": "vendor/bin/parallel-lint --colors src/ tests/",
+		"cs": "vendor/bin/ecs check src tests --ansi",
+		"cs-fix": "vendor/bin/ecs check src tests --fix --ansi",
 		"test": "vendor/bin/tester tests/",
 		"build-all": "composer lint && composer stan && composer cs && composer test"
 	}

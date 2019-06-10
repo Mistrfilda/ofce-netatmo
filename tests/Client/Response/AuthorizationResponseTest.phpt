@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Nette\Schema\ValidationException;
 use Nette\Utils\Json;
 use Ofce\Netatmo\Client\Response\AuthorizationResponse;
