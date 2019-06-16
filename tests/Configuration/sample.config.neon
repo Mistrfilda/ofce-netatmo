@@ -13,3 +13,8 @@ devices:
 			macAddress:  '88:5e:aa:11:22:33'
 		room2:
 			macAddress:  '11:5e:aa:11:22:33'
+
+logger:
+	name: 'ofce-netatmo'
+	handlers:
+		- Monolog\Handler\NullHandler()

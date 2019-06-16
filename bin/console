@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -9,23 +9,39 @@ use Ofce\Netatmo\Command\HealthyHomeCoach\GetHealthyHomeCoachDataCommand;
 use Ofce\Netatmo\Command\HealthyHomeCoach\SaveHealthyHomeCoachDataCommand;
 use Ofce\Netatmo\Configuration\Configuration;
 use Symfony\Component\Console\Application;
-use Tracy\Debugger;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 
-$mode = Debugger::DEVELOPMENT;
+$productionMode = false;
 
 $productionEnv = getenv('NETATMO_PRODUCTION');
 if ($productionEnv !== false && (bool) $productionEnv === true) {
-	$mode = Debugger::PRODUCTION;
+	$productionMode = true;
 }
-
-Debugger::enable($mode, __DIR__ . '/../log');
-
-$app = new Application();
 
 $configuration = new Configuration();
 
-$app->add(new GetHealthyHomeCoachDataCommand($configuration));
-$app->add(new SaveHealthyHomeCoachDataCommand($configuration));
+try {
+	$app = new Application();
 
-$app->run();
+	$app->setCatchExceptions(false);
+
+	$app->add(new GetHealthyHomeCoachDataCommand($configuration));
+	$app->add(new SaveHealthyHomeCoachDataCommand($configuration));
+
+	$input = new ArgvInput();
+	$output = new ConsoleOutput();
+
+
+	$app->run($input, $output);
+} catch (Throwable $e) {
+	$configuration->getLogger()->addException($e, $input->getArguments());
+	$app->renderException($e, $output);
+
+	if ($productionEnv) {
+		throw $e;
+	}
+}
+
+exit(2);

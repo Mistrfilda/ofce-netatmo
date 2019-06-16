@@ -14,8 +14,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Tracy\Debugger;
-use Tracy\ILogger;
 
 class SaveHealthyHomeCoachDataCommand extends BaseCommand
 {
@@ -48,6 +46,7 @@ class SaveHealthyHomeCoachDataCommand extends BaseCommand
 			$device = $this->configuration->getDeviceByName($deviceName, HealthyHomeCoach::DEVICE_NAME);
 		} catch (UnknownDeviceException $e) {
 			$console->text(sprintf('<error>%s</error>', $e->getMessage()));
+			$this->logger->addException($e);
 			exit(2);
 		}
 
@@ -75,12 +74,13 @@ class SaveHealthyHomeCoachDataCommand extends BaseCommand
 
 		if ($file === false) {
 			$console->error('There was an error saving data to file, please check permissions');
+			$this->logger->addCritical('There was an error saving data to file, please check permissions');
 			exit(2);
 		}
 
 		$console->section('<info>Data successfully saved</info>');
 
-		Debugger::log('Save healthy home coach data finished successfully', ILogger::INFO);
+		$this->logger->addInfo('Save healthy home coach data finished successfully', $data->getConsoleOutput());
 
 		return 0;
 	}

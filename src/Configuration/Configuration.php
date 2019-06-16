@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ofce\Netatmo\Configuration;
 
+use Nette\Neon\Entity;
 use Nette\Neon\Neon;
 use Nette\Schema\Expect;
 use Nette\Schema\Processor;
@@ -13,6 +14,7 @@ use Ofce\Netatmo\Device\Device;
 use Ofce\Netatmo\Device\HealthyHomeCoach;
 use Ofce\Netatmo\Exception\ConfigurationException;
 use Ofce\Netatmo\Exception\UnknownDeviceException;
+use Ofce\Netatmo\Logger\Logger;
 
 final class Configuration
 {
@@ -23,6 +25,9 @@ final class Configuration
 
 	/** @var Device[] */
 	private $devices = [];
+
+	/** @var Logger */
+	private $logger;
 
 	public function __construct(?string $configFile = null)
 	{
@@ -36,7 +41,6 @@ final class Configuration
 		}
 
 		$parameters = Neon::decode($neonConfig);
-
 		$this->validateConfig($parameters);
 
 		//Process healthy home coach, just for now, maybe more devices in the future :)
@@ -60,11 +64,17 @@ final class Configuration
 		);
 
 		$this->client = new Client($parameters['netatmoApi']['baseUrl'], $authorizationRequest);
+		$this->logger = new Logger($parameters['logger']['name'], $parameters['logger']['handlers']);
 	}
 
 	public function getClient(): Client
 	{
 		return $this->client;
+	}
+
+	public function getLogger(): Logger
+	{
+		return $this->logger;
 	}
 
 	/**
@@ -117,6 +127,10 @@ final class Configuration
 				'healthyHomeCoach' => Expect::array()->min(1.0)->items(Expect::structure([
 					'macAddress' => Expect::string()->required(),
 				])),
+			]),
+			'logger' => Expect::structure([
+				'name' => Expect::string()->required(),
+				'handlers' => Expect::arrayOf(Entity::class)->min(1.0),
 			]),
 		]);
 

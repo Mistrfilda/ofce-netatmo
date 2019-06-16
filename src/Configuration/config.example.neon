@@ -11,3 +11,8 @@ devices:
 	healthyHomeCoach:
 		room1:
 			macAddress: ''
+
+logger:
+	name: 'ofce-netatmo'
+	handlers:
+		- Monolog\Handler\NullHandler()

@@ -37,6 +37,7 @@ class GetHealthyHomeCoachDataCommand extends BaseCommand
 			$device = $this->configuration->getDeviceByName($deviceName, HealthyHomeCoach::DEVICE_NAME);
 		} catch (UnknownDeviceException $e) {
 			$console->text(sprintf('<error>%s</error>', $e->getMessage()));
+			$this->logger->addException($e);
 			exit(2);
 		}
 
@@ -60,6 +61,8 @@ class GetHealthyHomeCoachDataCommand extends BaseCommand
 			['Type', 'Value'],
 			$data->getConsoleOutput()
 		);
+
+		$this->logger->addDebug('Get healthy home coach data request finished successfully', $data->getConsoleOutput());
 
 		return 0;
 	}
