@@ -5,14 +5,19 @@ declare(strict_types=1);
 namespace Ofce\Netatmo\Client;
 
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\ClientException;
+use Nette\Caching\Cache;
 use Ofce\Netatmo\Client\Request\AuthorizationRequest;
 use Ofce\Netatmo\Client\Request\Request;
 use Ofce\Netatmo\Client\Response\AuthorizationResponse;
 use Ofce\Netatmo\Client\Response\Response;
+use Ofce\Netatmo\Logger\Logger;
 
 final class Client
 {
 	public const GRANT_PASSWORD = 'password';
+
+	public const FORBIDDEN_RESOURCE_CODE = 403;
 
 	/** @var string */
 	private $apiUrl;
@@ -23,30 +28,45 @@ final class Client
 	/** @var AuthorizationRequest */
 	private $authorizationRequest;
 
-	/** @var string|null */
-	private $accessToken = null;
+	/** @var Cache */
+	private $cache;
 
-	public function __construct(string $apiUrl, AuthorizationRequest $authorizationRequest)
-	{
+	/** @var Logger */
+	private $logger;
+
+	public function __construct(
+		string $apiUrl,
+		AuthorizationRequest $authorizationRequest,
+		Cache $cache,
+		Logger $logger
+	) {
 		$this->apiUrl = $apiUrl;
 		$this->authorizationRequest = $authorizationRequest;
+		$this->cache = $cache;
+		$this->logger = $logger;
 		$this->client = new GuzzleClient(['base_uri' => $apiUrl]);
 	}
 
-	public function getAccessToken(): string
+	public function getAccessToken(bool $refresh = false): string
 	{
-		if ($this->accessToken !== null) {
-			return $this->accessToken;
+		$accessToken = $this->cache->load('netatmo-authorization-code');
+
+		if ($accessToken !== null && $refresh === false) {
+			return $accessToken;
 		}
 
-		//TODO CACHING OF ACCESS TOKEN
 		$authorizationResponse = $this->sendAuthorizationRequest();
 
-		$this->accessToken = $authorizationResponse->getAccessToken();
-		return $this->accessToken;
+		$accessToken = $authorizationResponse->getAccessToken();
+
+		$this->cache->save('netatmo-authorization-code', $accessToken, [
+			Cache::EXPIRE => '20 minutes',
+		]);
+
+		return $accessToken;
 	}
 
-	public function sendRequest(Request $request): Response
+	public function sendRequest(Request $request, bool $forbiddenResend = true): Response
 	{
 		$options = [];
 		if ($request->hasBody()) {
@@ -55,7 +75,24 @@ final class Client
 			];
 		}
 
-		return $request->processResponse($this->client->send($request->getHttpRequest(), $options));
+		try {
+			$response = $this->client->send($request->getHttpRequest(), $options);
+		} catch (ClientException $e) {
+			if ($e->getCode() === self::FORBIDDEN_RESOURCE_CODE && $forbiddenResend && $request->hasAccessToken()) {
+				$this->logger->addNotice(
+					'Resending request due to forbidden access, trying to refresh access token',
+					['request' => get_class($request)]
+				);
+
+				$refreshAccessToken = $this->getAccessToken(true);
+				$request->refreshAccessToken($refreshAccessToken);
+				return $this->sendRequest($request, false);
+			}
+
+			throw $e;
+		}
+
+		return $request->processResponse($response);
 	}
 
 	/**

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Ofce\Netatmo\Configuration;
 
+use Nette\Caching\Cache;
+use Nette\Caching\Storages\FileStorage;
 use Nette\Neon\Entity;
 use Nette\Neon\Neon;
 use Nette\Schema\Expect;
@@ -63,8 +65,10 @@ final class Configuration
 			implode(' ', $scopes)
 		);
 
-		$this->client = new Client($parameters['netatmoApi']['baseUrl'], $authorizationRequest);
+		$cache = new Cache(new FileStorage(__DIR__ . '/../../temp'));
+
 		$this->logger = new Logger($parameters['logger']['name'], $parameters['logger']['handlers']);
+		$this->client = new Client($parameters['netatmoApi']['baseUrl'], $authorizationRequest, $cache, $this->logger);
 	}
 
 	public function getClient(): Client

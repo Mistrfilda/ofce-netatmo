@@ -60,5 +60,17 @@ abstract class Request
 		return count($this->body) > 0;
 	}
 
+	public function hasAccessToken(): bool
+	{
+		return array_key_exists('access_token', $this->body);
+	}
+
+	public function refreshAccessToken(string $accessToken): void
+	{
+		if (array_key_exists('access_token', $this->body)) {
+			$this->body['access_token'] = $accessToken;
+		}
+	}
+
 	abstract public function processResponse(ResponseInterface $response): Response;
 }
