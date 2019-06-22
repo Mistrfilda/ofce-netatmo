@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ofce\Netatmo\Configuration;
 
+use GuzzleHttp\Client as GuzzleClient;
 use Nette\Caching\Cache;
 use Nette\Caching\Storages\FileStorage;
 use Nette\Neon\Entity;
@@ -30,6 +31,9 @@ final class Configuration
 
 	/** @var Logger */
 	private $logger;
+
+	/** @var Cache */
+	private $cache;
 
 	public function __construct(?string $configFile = null)
 	{
@@ -65,10 +69,12 @@ final class Configuration
 			implode(' ', $scopes)
 		);
 
-		$cache = new Cache(new FileStorage(__DIR__ . '/../../temp'));
+		$this->cache = new Cache(new FileStorage(__DIR__ . '/../../temp'));
+
+		$guzzleClient = new GuzzleClient(['base_uri' => $parameters['netatmoApi']['baseUrl']]);
 
 		$this->logger = new Logger($parameters['logger']['name'], $parameters['logger']['handlers']);
-		$this->client = new Client($parameters['netatmoApi']['baseUrl'], $authorizationRequest, $cache, $this->logger);
+		$this->client = new Client($guzzleClient, $authorizationRequest, $this->cache, $this->logger);
 	}
 
 	public function getClient(): Client
@@ -79,6 +85,11 @@ final class Configuration
 	public function getLogger(): Logger
 	{
 		return $this->logger;
+	}
+
+	public function getCache(): Cache
+	{
+		return $this->cache;
 	}
 
 	/**

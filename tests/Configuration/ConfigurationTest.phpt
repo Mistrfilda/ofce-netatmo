@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Nette\Schema\ValidationException;
 use Ofce\Netatmo\Configuration\Configuration;
 use Ofce\Netatmo\Device\HealthyHomeCoach;
@@ -18,8 +20,6 @@ Assert::exception(function () {
 $configuration = new Configuration(__DIR__ . '/sample.config.neon');
 
 Assert::count(2, $configuration->getDevices());
-
-Assert::equal('https://testapi.netatmo.com/', $configuration->getClient()->getApiUrl());
 
 $device = $configuration->getDeviceByName('room1');
 

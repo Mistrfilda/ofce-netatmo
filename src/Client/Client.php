@@ -19,9 +19,6 @@ final class Client
 
 	public const FORBIDDEN_RESOURCE_CODE = 403;
 
-	/** @var string */
-	private $apiUrl;
-
 	/** @var GuzzleClient */
 	private $client;
 
@@ -35,16 +32,15 @@ final class Client
 	private $logger;
 
 	public function __construct(
-		string $apiUrl,
+		GuzzleClient $client,
 		AuthorizationRequest $authorizationRequest,
 		Cache $cache,
 		Logger $logger
 	) {
-		$this->apiUrl = $apiUrl;
 		$this->authorizationRequest = $authorizationRequest;
 		$this->cache = $cache;
 		$this->logger = $logger;
-		$this->client = new GuzzleClient(['base_uri' => $apiUrl]);
+		$this->client = $client;
 	}
 
 	public function getAccessToken(bool $refresh = false): string
@@ -93,14 +89,6 @@ final class Client
 		}
 
 		return $request->processResponse($response);
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getApiUrl(): string
-	{
-		return $this->apiUrl;
 	}
 
 	private function sendAuthorizationRequest(): AuthorizationResponse
