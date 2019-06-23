@@ -43,7 +43,7 @@ final class Configuration
 
 		$neonConfig = @file_get_contents($configFile);
 		if ($neonConfig === false) {
-			throw new ConfigurationException('Missing config file src/Configuration/config.local.neon');
+			throw new ConfigurationException('Missing configuration file');
 		}
 
 		$parameters = Neon::decode($neonConfig);
@@ -53,7 +53,9 @@ final class Configuration
 		foreach ($parameters['devices']['healthyHomeCoach'] as $name => $healthyHomeCoach) {
 			//Useless for now, again for future use :)
 			if (array_key_exists($name, $this->devices)) {
-				throw new ConfigurationException('Duplicate device name, devices must be unique across all types');
+				throw new ConfigurationException(
+					sprintf('Duplicate device name %s, devices must be unique across all types', $name)
+				);
 			}
 
 			$this->devices[$name] = new HealthyHomeCoach($name, $healthyHomeCoach['macAddress']);

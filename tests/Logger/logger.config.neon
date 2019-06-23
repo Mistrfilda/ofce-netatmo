@@ -1,0 +1,4 @@
+logger:
+	name: 'ofce-netatmo'
+	handlers:
+		- Monolog\Handler\NullHandler()

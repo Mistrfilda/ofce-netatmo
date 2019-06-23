@@ -1,0 +1,4 @@
+logger:
+	name: 'ofce-netatmo'
+	handlers:
+		- Ofce\Netatmo\Lib\DatetimeFactory()

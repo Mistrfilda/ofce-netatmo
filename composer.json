@@ -30,7 +30,7 @@
 		"lint": "vendor/bin/parallel-lint --colors src/ tests/",
 		"cs": "vendor/bin/ecs check src tests --ansi",
 		"cs-fix": "vendor/bin/ecs check src tests --fix --ansi",
-		"test": "vendor/bin/tester tests/",
+		"test": "vendor/bin/tester tests/ -C",
 		"build-all": "composer lint && composer stan && composer cs && composer test"
 	}
 }
