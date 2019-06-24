@@ -19,7 +19,7 @@ use Ofce\Netatmo\Exception\ConfigurationException;
 use Ofce\Netatmo\Exception\UnknownDeviceException;
 use Ofce\Netatmo\Logger\Logger;
 
-final class Configuration
+class Configuration
 {
 	public const CONFIG_LOCATION = __DIR__ . '/config.local.neon';
 
