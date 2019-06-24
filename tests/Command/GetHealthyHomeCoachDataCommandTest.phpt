@@ -26,3 +26,9 @@ Assert::contains('Absolute pressure', $output);
 Assert::contains('24.3 °C at 2019-06-10 04:14:47', $output);
 Assert::contains('29 °C at 2019-06-10 16:18:51', $output);
 Assert::contains('Healthy home coach data request', $output);
+
+$commandTester->execute([
+	'device' => 'device123'
+]);
+
+Assert::equal(2, $commandTester->getStatusCode());

@@ -21,9 +21,26 @@ $commandTester->execute([
 ]);
 
 $output = $commandTester->getDisplay();
-echo $output;
+
 
 Assert::contains('Sending request', $output);
 Assert::contains('Request sended successfully', $output);
 Assert::contains('Saving data into file', $output);
 Assert::contains('Data successfully saved', $output);
+
+$commandTester->execute([
+	'device' => 'device1',
+	'onlyTemperature' => 1,
+	'file' => __DIR__ .'/wwwwwww/test.txt'
+]);
+
+$commandTester->getDisplay();
+
+Assert::equal(2, $commandTester->getStatusCode());
+
+$commandTester->execute([
+	'device' => 'device123',
+	'file' => __DIR__ .'/test.txt'
+]);
+
+Assert::equal(2, $commandTester->getStatusCode());

@@ -47,7 +47,7 @@ class SaveHealthyHomeCoachDataCommand extends BaseCommand
 		} catch (UnknownDeviceException $e) {
 			$console->text(sprintf('<error>%s</error>', $e->getMessage()));
 			$this->logger->addException($e);
-			exit(2);
+			return 2;
 		}
 
 		$console->section('<info>Sending request</info>');
@@ -75,7 +75,7 @@ class SaveHealthyHomeCoachDataCommand extends BaseCommand
 		if ($file === false) {
 			$console->error('There was an error saving data to file, please check permissions');
 			$this->logger->addCritical('There was an error saving data to file, please check permissions');
-			exit(2);
+			return 2;
 		}
 
 		$console->section('<info>Data successfully saved</info>');

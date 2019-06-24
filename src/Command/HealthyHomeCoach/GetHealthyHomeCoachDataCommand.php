@@ -38,7 +38,7 @@ class GetHealthyHomeCoachDataCommand extends BaseCommand
 		} catch (UnknownDeviceException $e) {
 			$console->text(sprintf('<error>%s</error>', $e->getMessage()));
 			$this->logger->addException($e);
-			exit(2);
+			return 2;
 		}
 
 		$console->section('<info>Sending request</info>');
