@@ -18,7 +18,8 @@
 		"jakub-onderka/php-parallel-lint": "^1.0",
 		"tracy/tracy": "^2.6",
 		"symplify/easy-coding-standard": "^6.0",
-		"roave/security-advisories": "dev-master"
+		"roave/security-advisories": "dev-master",
+		"mockery/mockery": "^1.2"
 	},
 	"autoload": {
 		"classmap": [
