@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Ofce\Netatmo\Command\HealthyHomeCoach\GetHealthyHomeCoachDataCommand;
 use Ofce\Netatmo\Command\HealthyHomeCoach\SaveHealthyHomeCoachDataCommand;
 use Symfony\Component\Console\Tester\CommandTester;
 use Tester\Assert;
