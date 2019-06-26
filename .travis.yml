@@ -14,4 +14,14 @@ script:
   - composer lint
   - composer stan
   - composer cs
-  - composer test
+  - composer test-coverage
+
+after_script:
+  - composer global require php-coveralls/php-coveralls ^2.1.0
+  - ~/.composer/vendor/bin/php-coveralls --verbose --config tests/.coveralls.yml
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
