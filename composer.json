@@ -32,7 +32,7 @@
 		"cs": "vendor/bin/ecs check src tests --ansi",
 		"cs-fix": "vendor/bin/ecs check src tests --fix --ansi",
 		"test": "vendor/bin/tester tests/ -C",
-		"test-coverage": "vendor/bin/tester tests/ -C --coverage coverage.xml --coverage-src src/ ",
+		"test-coverage": "vendor/bin/tester tests/ -C --coverage ./coverage.xml --coverage-src ./src/ ",
 		"test-coverage-html": "vendor/bin/tester tests/ -C --coverage coverage.html --coverage-src src/ ",
 		"build-all": "composer lint && composer stan && composer cs && composer test"
 	}
