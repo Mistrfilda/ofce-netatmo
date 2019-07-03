@@ -46,8 +46,7 @@ class Configuration
 			throw new ConfigurationException('Missing configuration file');
 		}
 
-		$parameters = Neon::decode($neonConfig);
-		$this->validateConfig($parameters);
+		$parameters = $this->validateConfig(Neon::decode($neonConfig));
 
 		//Process healthy home coach, just for now, maybe more devices in the future :)
 		foreach ($parameters['devices']['healthyHomeCoach'] as $name => $healthyHomeCoach) {
@@ -125,32 +124,33 @@ class Configuration
 
 	/**
 	 * @param mixed[] $parameters
+	 * @return mixed[]
 	 */
-	private function validateConfig(array $parameters): void
+	private function validateConfig(array $parameters): array
 	{
 		$processor = new Processor();
 
 		$schema = Expect::structure([
 			'netatmoApi' => Expect::structure([
 				'baseUrl' => Expect::string()->required(),
-			]),
+			])->castTo('array'),
 			'credentials' => Expect::structure([
 				'clientId' => Expect::string()->required()->min(10.0),
 				'clientSecret' => Expect::string()->required()->min(10.0),
 				'username' => Expect::string()->required()->min(1.0),
 				'password' => Expect::string()->required()->min(1.0),
-			]),
+			])->castTo('array'),
 			'devices' => Expect::structure([
 				'healthyHomeCoach' => Expect::array()->min(1.0)->items(Expect::structure([
 					'macAddress' => Expect::string()->required(),
-				])),
-			]),
+				])->castTo('array')),
+			])->castTo('array'),
 			'logger' => Expect::structure([
 				'name' => Expect::string()->required(),
 				'handlers' => Expect::arrayOf(Entity::class)->min(1.0),
-			]),
+			])->castTo('array'),
 		]);
 
-		$processor->process($schema, $parameters);
+		return (array) $processor->process($schema, $parameters);
 	}
 }
