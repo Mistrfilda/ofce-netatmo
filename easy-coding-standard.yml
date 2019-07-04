@@ -79,6 +79,7 @@ parameters:
     PhpCsFixer\Fixer\Import\SingleImportPerStatementFixer: ~
     PhpCsFixer\Fixer\ReturnNotation\ReturnAssignmentFixer:
       - src/Client/Client.php
+      - src/Facade/HealthyHomeCoachFacade.php
 
 
   exclude_checkers:

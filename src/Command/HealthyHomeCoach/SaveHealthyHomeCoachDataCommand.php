@@ -5,17 +5,13 @@ declare(strict_types=1);
 namespace Ofce\Netatmo\Command\HealthyHomeCoach;
 
 use Nette\Utils\Json;
-use Ofce\Netatmo\Client\Request\HealthyHomeCoachDataRequest;
-use Ofce\Netatmo\Client\Response\HealthyHomeCoachResponse;
-use Ofce\Netatmo\Command\BaseCommand;
-use Ofce\Netatmo\Device\HealthyHomeCoach;
 use Ofce\Netatmo\Exception\UnknownDeviceException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class SaveHealthyHomeCoachDataCommand extends BaseCommand
+class SaveHealthyHomeCoachDataCommand extends BaseHealthyHomeCoachCommand
 {
 	public function configure(): void
 	{
@@ -41,24 +37,15 @@ class SaveHealthyHomeCoachDataCommand extends BaseCommand
 
 		$console->title('<info>Healthy home coach data request</info>');
 
+		$console->section('<info>Sending request</info>');
+
 		try {
-			/** @var HealthyHomeCoach $device */
-			$device = $this->configuration->getDeviceByName($deviceName, HealthyHomeCoach::DEVICE_NAME);
+			$response = $this->healthyHomeCoachFacade->getHealthyHomeCoachData($deviceName);
 		} catch (UnknownDeviceException $e) {
 			$console->text(sprintf('<error>%s</error>', $e->getMessage()));
 			$this->logger->addException($e);
 			return 2;
 		}
-
-		$console->section('<info>Sending request</info>');
-
-		$request = new HealthyHomeCoachDataRequest(
-			$this->configuration->getClient()->getAccessToken(),
-			$device->getMacAddress()
-		);
-
-		/** @var HealthyHomeCoachResponse $response */
-		$response = $this->configuration->getClient()->sendRequest($request);
 
 		$console->text('Request sended successfully');
 
