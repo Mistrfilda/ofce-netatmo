@@ -7,7 +7,6 @@ use Ofce\Netatmo\Client\Request\HealthyHomeCoachDataRequest;
 use Ofce\Netatmo\Client\Request\Request;
 use Tester\Assert;
 
-
 require __DIR__ . '/../../Bootstrap.php';
 
 $authorizationRequest = new HealthyHomeCoachDataRequest(

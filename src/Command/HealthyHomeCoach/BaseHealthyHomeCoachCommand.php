@@ -10,8 +10,7 @@ use Ofce\Netatmo\Facade\HealthyHomeCoachFacade;
 
 abstract class BaseHealthyHomeCoachCommand extends BaseCommand
 {
-	/** @var HealthyHomeCoachFacade */
-	protected $healthyHomeCoachFacade;
+	protected HealthyHomeCoachFacade $healthyHomeCoachFacade;
 
 	public function __construct(Configuration $configuration)
 	{

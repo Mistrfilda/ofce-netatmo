@@ -10,17 +10,17 @@ class HealthyHomeCoach extends Device
 
 	public const DEVICE_NAME = 'healthyHomeCoach';
 
-	public function __construct(string $name, string $macAddress)
-	{
-		parent::__construct($name, $macAddress);
-	}
-
 	/**
 	 * @return string[]
 	 */
 	public static function getOauthScopes(): array
 	{
 		return [self::OAUTH_SCOPE];
+	}
+
+	public function __construct(string $name, string $macAddress)
+	{
+		parent::__construct($name, $macAddress);
 	}
 
 	public function getDeviceType(): string

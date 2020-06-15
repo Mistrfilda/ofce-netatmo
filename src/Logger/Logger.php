@@ -14,12 +14,10 @@ use Throwable;
 
 class Logger
 {
-	/** @var MonologLogger */
-	private $logger;
+	private MonologLogger $logger;
 
 	/**
 	 * Logger constructor.
-	 * @param string $name
 	 * @param Entity[] $handlers
 	 * @throws ReflectionException
 	 */
@@ -40,36 +38,57 @@ class Logger
 		}
 	}
 
+	/**
+	 * @param mixed[] $context
+	 */
 	public function addDebug(string $message, array $context = []): void
 	{
 		$this->logger->addDebug($message, $context);
 	}
 
+	/**
+	 * @param mixed[] $context
+	 */
 	public function addInfo(string $message, array $context = []): void
 	{
 		$this->logger->addInfo($message, $context);
 	}
 
+	/**
+	 * @param mixed[] $context
+	 */
 	public function addNotice(string $message, array $context = []): void
 	{
 		$this->logger->addNotice($message, $context);
 	}
 
+	/**
+	 * @param mixed[] $context
+	 */
 	public function addWarning(string $message, array $context = []): void
 	{
 		$this->logger->addWarning($message, $context);
 	}
 
+	/**
+	 * @param mixed[] $context
+	 */
 	public function addCritical(string $message, array $context = []): void
 	{
 		$this->logger->addCritical($message, $context);
 	}
 
+	/**
+	 * @param mixed[] $context
+	 */
 	public function addEmergency(string $message, array $context = []): void
 	{
 		$this->logger->addEmergency($message, $context);
 	}
 
+	/**
+	 * @param mixed[] $context
+	 */
 	public function addException(Throwable $exception, array $context = []): void
 	{
 		$this->logger->addCritical($exception->getMessage(), array_merge(['exception' => $exception], $context));

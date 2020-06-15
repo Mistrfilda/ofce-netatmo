@@ -6,7 +6,6 @@ use Ofce\Netatmo\Command\HealthyHomeCoach\SaveHealthyHomeCoachDataCommand;
 use Symfony\Component\Console\Tester\CommandTester;
 use Tester\Assert;
 
-
 require __DIR__ . '/BaseCommandHealthyHomeCoachTest.php';
 require __DIR__ . '/../Bootstrap.php';
 
@@ -16,7 +15,7 @@ $commandTester = new CommandTester($healthyHomeCoachCommand);
 
 $commandTester->execute([
 	'device' => 'device1',
-	'file' => __DIR__ .'/test.txt'
+	'file' => __DIR__ . '/test.txt',
 ]);
 
 $output = $commandTester->getDisplay();
@@ -30,7 +29,7 @@ Assert::contains('Data successfully saved', $output);
 $commandTester->execute([
 	'device' => 'device1',
 	'onlyTemperature' => 1,
-	'file' => __DIR__ .'/wwwwwww/test.txt'
+	'file' => __DIR__ . '/wwwwwww/test.txt',
 ]);
 
 $commandTester->getDisplay();
@@ -39,7 +38,7 @@ Assert::equal(2, $commandTester->getStatusCode());
 
 $commandTester->execute([
 	'device' => 'device123',
-	'file' => __DIR__ .'/test.txt'
+	'file' => __DIR__ . '/test.txt',
 ]);
 
 Assert::equal(2, $commandTester->getStatusCode());

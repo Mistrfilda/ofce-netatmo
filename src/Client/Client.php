@@ -19,17 +19,13 @@ final class Client
 
 	public const FORBIDDEN_RESOURCE_CODE = 403;
 
-	/** @var GuzzleClient */
-	private $client;
+	private GuzzleClient $client;
 
-	/** @var AuthorizationRequest */
-	private $authorizationRequest;
+	private AuthorizationRequest $authorizationRequest;
 
-	/** @var Cache */
-	private $cache;
+	private Cache $cache;
 
-	/** @var Logger */
-	private $logger;
+	private Logger $logger;
 
 	public function __construct(
 		GuzzleClient $client,

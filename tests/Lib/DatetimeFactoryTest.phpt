@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Ofce\Netatmo\Lib\DatetimeFactory;
 use Tester\Assert;
 
-
 require __DIR__ . '/../Bootstrap.php';
 
 

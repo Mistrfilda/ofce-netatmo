@@ -30,7 +30,7 @@ class SaveHealthyHomeCoachDataCommand extends BaseHealthyHomeCoachCommand
 		/** @var string $file */
 		$file = $input->getArgument('file');
 
-		/** @var bool $onlyTemperatire */
+		/** @var bool $onlyTemperature */
 		$onlyTemperature = (bool) $input->getArgument('onlyTemperature');
 
 		$console = new SymfonyStyle($input, $output);

@@ -9,41 +9,29 @@ use Ofce\Netatmo\Lib\DatetimeFactory;
 
 class HealthyHomeCoachData
 {
-	/** @var DateTimeImmutable */
-	private $time;
+	private DateTimeImmutable $time;
 
-	/** @var float */
-	private $temperature;
+	private float $temperature;
 
-	/** @var float */
-	private $CO2;
+	private float $CO2;
 
-	/** @var float */
-	private $humidity;
+	private float $humidity;
 
-	/** @var float */
-	private $noise;
+	private float $noise;
 
-	/** @var float */
-	private $pressure;
+	private float $pressure;
 
-	/** @var float */
-	private $absolutePressure;
+	private float $absolutePressure;
 
-	/** @var int */
-	private $healthIdx;
+	private int $healthIdx;
 
-	/** @var float */
-	private $minTemp;
+	private float $minTemp;
 
-	/** @var DateTimeImmutable */
-	private $dateMinTemp;
+	private DateTimeImmutable $dateMinTemp;
 
-	/** @var float */
-	private $maxTemp;
+	private float $maxTemp;
 
-	/** @var DateTimeImmutable */
-	private $dateMaxTemp;
+	private DateTimeImmutable $dateMaxTemp;
 
 	public function __construct(
 		int $time,
@@ -73,97 +61,61 @@ class HealthyHomeCoachData
 		$this->dateMaxTemp = new DateTimeImmutable('@' . $dateMaxTemp);
 	}
 
-	/**
-	 * @return DateTimeImmutable
-	 */
 	public function getTime(): DateTimeImmutable
 	{
 		return $this->time;
 	}
 
-	/**
-	 * @return float
-	 */
 	public function getTemperature(): float
 	{
 		return $this->temperature;
 	}
 
-	/**
-	 * @return float
-	 */
 	public function getCO2(): float
 	{
 		return $this->CO2;
 	}
 
-	/**
-	 * @return float
-	 */
 	public function getHumidity(): float
 	{
 		return $this->humidity;
 	}
 
-	/**
-	 * @return float
-	 */
 	public function getNoise(): float
 	{
 		return $this->noise;
 	}
 
-	/**
-	 * @return float
-	 */
 	public function getPressure(): float
 	{
 		return $this->pressure;
 	}
 
-	/**
-	 * @return float
-	 */
 	public function getAbsolutePressure(): float
 	{
 		return $this->absolutePressure;
 	}
 
-	/**
-	 * @return int
-	 */
 	public function getHealthIdx(): int
 	{
 		return $this->healthIdx;
 	}
 
-	/**
-	 * @return float
-	 */
 	public function getMinTemp(): float
 	{
 		return $this->minTemp;
 	}
 
-	/**
-	 * @return DateTimeImmutable
-	 */
 	public function getDateMinTemp(): DateTimeImmutable
 	{
 		return $this->dateMinTemp;
 	}
 
-	/**
-	 * @return float
-	 */
 	public function getMaxTemp(): float
 	{
 		return $this->maxTemp;
 	}
 
-	/**
-	 * @return DateTimeImmutable
-	 */
 	public function getDateMaxTemp(): DateTimeImmutable
 	{
 		return $this->dateMaxTemp;

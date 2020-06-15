@@ -9,32 +9,24 @@ use Nette\Schema\Schema;
 
 class AuthorizationResponse extends Response
 {
-	/** @var string */
-	private $accessToken;
+	private string $accessToken;
 
-	/** @var string */
-	private $refreshToken;
-
-	/** @var string[] */
-	private $scope;
-
-	/** @var int */
-	private $expiresIn;
-
-	/** @var int */
-	private $expireIn;
+	private string $refreshToken;
 
 	/**
-	 * @return string
+	 * @var string[]
 	 */
+	private array $scope;
+
+	private int $expiresIn;
+
+	private int $expireIn;
+
 	public function getAccessToken(): string
 	{
 		return $this->accessToken;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getRefreshToken(): string
 	{
 		return $this->refreshToken;
@@ -48,17 +40,11 @@ class AuthorizationResponse extends Response
 		return $this->scope;
 	}
 
-	/**
-	 * @return int
-	 */
 	public function getExpiresIn(): int
 	{
 		return $this->expiresIn;
 	}
 
-	/**
-	 * @return int
-	 */
 	public function getExpireIn(): int
 	{
 		return $this->expireIn;

@@ -13,8 +13,7 @@ use Ofce\Netatmo\Exception\UnknownDeviceException;
 
 class HealthyHomeCoachFacade
 {
-	/** @var Configuration */
-	private $configuration;
+	private Configuration $configuration;
 
 	public function __construct(Configuration $configuration)
 	{
@@ -22,8 +21,6 @@ class HealthyHomeCoachFacade
 	}
 
 	/**
-	 * @param string $deviceName
-	 * @return HealthyHomeCoachResponse
 	 * @throws UnknownDeviceException
 	 * @throws RequestException
 	 */

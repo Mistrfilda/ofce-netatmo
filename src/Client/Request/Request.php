@@ -15,16 +15,15 @@ abstract class Request
 
 	public const METHOD_POST = 'post';
 
-	/** @var GuzzleRequest */
-	private $httpRequest;
+	private GuzzleRequest $httpRequest;
 
-	/** @var string[] */
-	private $body;
+	/**
+	 * @var string[]
+	 */
+	private array $body;
 
 	/**
 	 * Request constructor.
-	 * @param string $method
-	 * @param string $endpoint
 	 * @param string[] $body
 	 * @throws RequestException
 	 */

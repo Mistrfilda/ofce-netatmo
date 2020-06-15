@@ -6,7 +6,6 @@ use Ofce\Netatmo\Command\HealthyHomeCoach\GetHealthyHomeCoachDataCommand;
 use Symfony\Component\Console\Tester\CommandTester;
 use Tester\Assert;
 
-
 require __DIR__ . '/BaseCommandHealthyHomeCoachTest.php';
 require __DIR__ . '/../Bootstrap.php';
 
@@ -15,7 +14,7 @@ $healthyHomeCoachCommand = new GetHealthyHomeCoachDataCommand($mockedConfigurati
 $commandTester = new CommandTester($healthyHomeCoachCommand);
 
 $commandTester->execute([
-	'device' => 'device1'
+	'device' => 'device1',
 ]);
 
 $output = $commandTester->getDisplay();
@@ -28,7 +27,7 @@ Assert::contains('29 °C at 2019-06-10 16:18:51', $output);
 Assert::contains('Healthy home coach data request', $output);
 
 $commandTester->execute([
-	'device' => 'device123'
+	'device' => 'device123',
 ]);
 
 Assert::equal(2, $commandTester->getStatusCode());

@@ -10,11 +10,9 @@ use Symfony\Component\Console\Command\Command;
 
 abstract class BaseCommand extends Command
 {
-	/** @var Configuration */
-	protected $configuration;
+	protected Configuration $configuration;
 
-	/** @var Logger */
-	protected $logger;
+	protected Logger $logger;
 
 	public function __construct(Configuration $configuration)
 	{

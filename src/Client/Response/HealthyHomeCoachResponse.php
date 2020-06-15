@@ -13,45 +13,29 @@ use Ofce\Netatmo\Device\Data\HealthyHomeCoachData;
 
 class HealthyHomeCoachResponse extends Response
 {
-	/** @var string */
-	private $status;
+	private string $status;
 
-	/** @var float */
-	private $executionTime;
+	private float $executionTime;
 
-	/** @var DateTimeImmutable */
-	private $deviceTime;
+	private DateTimeImmutable $deviceTime;
 
-	/** @var HealthyHomeCoachData */
-	private $healthyHomeCoachData;
+	private HealthyHomeCoachData $healthyHomeCoachData;
 
-	/**
-	 * @return string
-	 */
 	public function getStatus(): string
 	{
 		return $this->status;
 	}
 
-	/**
-	 * @return float
-	 */
 	public function getExecutionTime(): float
 	{
 		return $this->executionTime;
 	}
 
-	/**
-	 * @return DateTimeImmutable
-	 */
 	public function getDeviceTime(): DateTimeImmutable
 	{
 		return $this->deviceTime;
 	}
 
-	/**
-	 * @return HealthyHomeCoachData
-	 */
 	public function getHealthyHomeCoachData(): HealthyHomeCoachData
 	{
 		return $this->healthyHomeCoachData;

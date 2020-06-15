@@ -23,17 +23,16 @@ class Configuration
 {
 	public const CONFIG_LOCATION = __DIR__ . '/config.local.neon';
 
-	/** @var Client */
-	private $client;
+	private Client $client;
 
-	/** @var Device[] */
-	private $devices = [];
+	/**
+	 * @var Device[]
+	 */
+	private array $devices = [];
 
-	/** @var Logger */
-	private $logger;
+	private Logger $logger;
 
-	/** @var Cache */
-	private $cache;
+	private Cache $cache;
 
 	public function __construct(?string $configFile = null)
 	{
@@ -102,9 +101,6 @@ class Configuration
 	}
 
 	/**
-	 * @param string $name
-	 * @param string|null $deviceType
-	 * @return Device
 	 * @throws UnknownDeviceException
 	 */
 	public function getDeviceByName(string $name, ?string $deviceType = null): Device

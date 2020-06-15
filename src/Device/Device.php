@@ -6,11 +6,14 @@ namespace Ofce\Netatmo\Device;
 
 abstract class Device
 {
-	/** @var string */
-	protected $name;
+	protected string $name;
 
-	/** @var string */
-	protected $macAddress;
+	protected string $macAddress;
+
+	/**
+	 * @return string[]
+	 */
+	abstract public static function getOauthScopes(): array;
 
 	public function __construct(string $name, string $macAddress)
 	{
@@ -18,24 +21,15 @@ abstract class Device
 		$this->macAddress = $macAddress;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getName(): string
 	{
 		return $this->name;
 	}
 
-	/**
-	 * @return mixed
-	 */
-	public function getMacAddress()
+	public function getMacAddress(): string
 	{
 		return $this->macAddress;
 	}
 
 	abstract public function getDeviceType(): string;
-
-	/** @return string[] */
-	abstract public static function getOauthScopes(): array;
 }

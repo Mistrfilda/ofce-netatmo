@@ -11,7 +11,7 @@ use Ofce\Netatmo\Exception\ConfigurationException;
 use Ofce\Netatmo\Exception\UnknownDeviceException;
 use Tester\Assert;
 
-Assert::exception(function () {
+Assert::exception(function (): void {
 	new Configuration(__DIR__ . '/wrong.config.neon');
 }, ValidationException::class);
 
@@ -26,7 +26,7 @@ Assert::type(HealthyHomeCoach::class, $device);
 Assert::equal('88:5e:aa:11:22:33', $device->getMacAddress());
 Assert::equal(HealthyHomeCoach::DEVICE_NAME, $device->getDeviceType());
 Assert::equal('room1', $device->getName());
-Assert::noError(function () use ($configuration) {
+Assert::noError(function () use ($configuration): void {
 	$configuration->getClient();
 	$configuration->getCache();
 	$configuration->getLogger();
@@ -36,14 +36,14 @@ $device = $configuration->getDeviceByName('room1', HealthyHomeCoach::DEVICE_NAME
 Assert::type(HealthyHomeCoach::class, $device);
 
 
-Assert::exception(function () use ($configuration) {
+Assert::exception(function () use ($configuration): void {
 	$configuration->getDeviceByName('room123');
 }, UnknownDeviceException::class);
 
-Assert::exception(function () use ($configuration) {
+Assert::exception(function () use ($configuration): void {
 	$configuration->getDeviceByName('room1', 'unknwondDeviceType');
 }, UnknownDeviceException::class);
 
-Assert::exception(function () {
+Assert::exception(function (): void {
 	new Configuration(__DIR__ . '/test.neon');
 }, ConfigurationException::class, 'Missing configuration file');
